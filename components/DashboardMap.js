@@ -7,16 +7,16 @@ const DashboardMap = ({ properties }) => {
     googleMapsApiKey: process.env.googlePlacesAPI,
   })
 
-  console.log(properties[0].location?.lat)
-  console.log(properties[0].location?.lat)
+  console.log(properties[0]?.location?.lat)
+  console.log(properties[0]?.location?.lat)
   const containerStyle = {
     width: "100%",
     height: "100vh",
   }
 
   const center = {
-    lat: properties[0].location?.lat,
-    lng: properties[0].location?.lng,
+    lat: properties[0]?.location?.lat,
+    lng: properties[0]?.location?.lng,
   }
 
   const [map, setMap] = React.useState(null)
