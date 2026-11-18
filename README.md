@@ -63,6 +63,28 @@ Instagram: https://www.instagram.com/aniakubow
 
 
 
+## Running locally
+
+```bash
+git clone https://github.com/d-kess/airbnb-sanity-frontend.git
+cd airbnb-sanity-frontend
+npm i
+```
+
+Create a `.env.local` file in the project root with your own values (read in `sanity.js` and `components/Map.js` / `components/DashboardMap.js`):
+
+```bash
+NEXT_PUBLIC_SANITY_PROJECT_ID=<your Sanity project ID>
+NEXT_PUBLIC_SANITY_DATASET=production   # optional, defaults to "production"
+googlePlacesAPI=<your Google Maps API key>
+```
+
+Then start the dev server and open [http://localhost:3000](http://localhost:3000):
+
+```bash
+npm run dev
+```
+
 ## Getting Started
 
 
