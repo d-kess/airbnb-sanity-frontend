@@ -7,17 +7,16 @@ const DashboardMap = ({ properties }) => {
     googleMapsApiKey: process.env.googlePlacesAPI,
   })
 
-  console.log(properties[0].location?.lat)
-  console.log(properties[0].location?.lat)
   const containerStyle = {
     width: "100%",
     height: "100vh",
   }
 
-  const center = {
-    lat: properties[0].location?.lat,
-    lng: properties[0].location?.lng,
-  }
+  const first = properties[0]?.location
+  const center =
+    first?.lat !== undefined && first?.lng !== undefined
+      ? { lat: first.lat, lng: first.lng }
+      : undefined
 
   const [map, setMap] = React.useState(null)
 
@@ -44,6 +43,7 @@ const DashboardMap = ({ properties }) => {
     >
       {properties.map((property, index) => (
         <Marker
+          key={property._id || index}
           position={{
             lat: property?.location?.lat,
             lng: property?.location?.lng,
