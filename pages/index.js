@@ -1,20 +1,55 @@
+import { useState } from "react"
 import { sanityClient, urlFor } from "../sanity"
 import Link from "next/link"
 import { isMultiple } from "../utils"
 import DashboardMap from "../components/DashboardMap"
 
 const Home = ({ properties }) => {
-  console.log(properties)
+  const [query, setQuery] = useState("")
+  const trimmedQuery = query.trim()
+  const normalizedQuery = trimmedQuery.toLowerCase()
+  const filteredProperties = properties
+    ? properties.filter((property) =>
+        (property.title || "").toLowerCase().includes(normalizedQuery)
+      )
+    : []
+  const hasNoResults = trimmedQuery !== "" && filteredProperties.length === 0
+
   return (
     <>
       {properties && (
         <div className="main">
           <div className="feed-container">
             <h1>Places to stay near you</h1>
+            <div className="search">
+              <label htmlFor="property-search" className="sr-only">
+                Search places by title
+              </label>
+              <input
+                id="property-search"
+                type="search"
+                className="search-input"
+                placeholder="Search places by title"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                autoComplete="off"
+              />
+            </div>
+            <div className="search-status" aria-live="polite" role="status">
+              {hasNoResults && (
+                <p className="no-results">
+                  No places match “{trimmedQuery}”. Try a different title or
+                  clear the search.
+                </p>
+              )}
+            </div>
             <div className="feed">
-              {properties.map((property) => (
-                <Link href={`property/${property.slug.current}`}>
-                  <div key={property._id} className="card">
+              {filteredProperties.map((property) => (
+                <Link
+                  key={property._id}
+                  href={`property/${property.slug.current}`}
+                >
+                  <div className="card">
                     <img src={urlFor(property.mainImage)} />
                     <p>
                       {property.reviews.length} review
